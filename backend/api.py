@@ -83,10 +83,21 @@ def simulate_timeline(req: SimulateRequest):
                 write_memory(req.contact_id, payload, metadata)
                 ingested_count += 1
                 
-    # Vectorize Hindsight can have a slight indexing delay. Wait 3 seconds to ensure 
-    # the next /prep call retrieves the newly written memories.
+    # Poll Vectorize Hindsight for indexing completion
     import time
-    time.sleep(3)
+    if ingested_count > 0:
+        client_hs = get_hindsight_client()
+        start_time = time.time()
+        while time.time() - start_time < 30:
+            try:
+                res = client_hs.recall(query="*", bank_id=req.contact_id)
+                if hasattr(res, 'results') and len(res.results) > 0:
+                    break
+            except Exception:
+                pass
+            time.sleep(1.5)
+        else:
+            return {"status": "warning", "message": f"Memory reset. Ingested {meetings_to_ingest} past meetings ({ingested_count} snippets). Warning: Memory indexing timed out after 30s."}
                 
     return {"status": "success", "message": f"Memory reset. Ingested {meetings_to_ingest} past meetings ({ingested_count} snippets)."}
 
@@ -146,10 +157,10 @@ def generate_prep(req: PrepRequest):
     if not memory_text or len(memory_text) < 15:
         return PrepResponse(
             briefing={
-                "What you discussed last time": "No past meetings on record.",
-                "Promises you haven't followed up on": "None.",
-                "Concerns to address": "None.",
-                "Personal touch to mention": "This is your first meeting. Focus on building rapport."
+                "What you discussed last time": f"This is your first meeting with {contact_id}. No history yet.",
+                "Open commitments": "No previous promises to track.",
+                "Concerns to address": "Are there any immediate roadblocks preventing them from moving forward?",
+                "Personal touch to mention": "Ask about their role, their company's current main focus, and how they like their current tech stack. The agent will start remembering after this meeting."
             },
             raw_memory=raw_memory_display,
             model_used="static-no-memory"
@@ -172,13 +183,13 @@ def generate_prep(req: PrepRequest):
     {context}
     
     INSTRUCTIONS:
-    - If there are past topics, summarize them.
-    - If there are open promises, explicitly name them so the presenter remembers to follow up.
-    - Explicitly extract and name any personal details (e.g., hobbies, family, trips) to build rapport.
+    - Summarize past topics discussed.
+    - Open commitments: You MUST list ONLY promises that have NO later delivery recorded in memory. Do not invent delivery status. If the memory doesn't say it was delivered, assume it is open. If all promises are explicitly marked delivered, state "No open commitments."
+    - Extract and name any personal details (e.g., hobbies, family, trips) to build rapport.
     
     Return ONLY a valid JSON object with EXACTLY these string keys:
     - "What you discussed last time"
-    - "Promises you haven't followed up on"
+    - "Open commitments"
     - "Concerns to address"
     - "Personal touch to mention"
     """
@@ -199,7 +210,7 @@ def generate_prep(req: PrepRequest):
             
             expected_keys = [
                 "What you discussed last time",
-                "Promises you haven't followed up on",
+                "Open commitments",
                 "Concerns to address",
                 "Personal touch to mention"
             ]

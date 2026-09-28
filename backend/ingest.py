@@ -48,6 +48,7 @@ def ingest_data(reset: bool = False):
                 'topics': meeting.get('topics'),
                 'objections': meeting.get('objections'),
                 'promises': meeting.get('promises'),
+                'follow_ups': meeting.get('follow_ups'),
                 'personal_notes': meeting.get('personal_details')
             }
             

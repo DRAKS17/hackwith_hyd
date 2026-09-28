@@ -2,388 +2,228 @@
   "contacts": [
     {
       "contact_id": "c1",
-      "name": "Jane Doe",
-      "company": "Tech Corp",
+      "name": "Elena Rostova",
+      "title": "Vice President of Procurement",
+      "company": "NovaTech Solutions",
       "meetings": [
         {
-          "date": "2023-07-01",
-          "topics": [
-            "Product demo",
-            "Integration roadmap"
-          ],
-          "objections": [
-            "Concern about API latency",
-            "Need more security certifications"
-          ],
+          "date": "2026-02-05",
+          "topics": "Introduced NovaTech capabilities and discussed procurement needs.",
+          "objections": "Concern about integration timeline.",
           "promises": [
-            "Provide latency benchmarks",
-            "Arrange call with security team"
+            "Send product brochure"
           ],
-          "personal_details": "Mentioned her daughter is starting college next month"
+          "follow_ups": [],
+          "personal_details": ""
         },
         {
-          "date": "2023-08-12",
-          "topics": [
-            "Pricing model",
-            "Contract terms"
-          ],
-          "objections": [
-            "Price is higher than competitor",
-            "Long contract length"
-          ],
+          "date": "2026-03-12",
+          "topics": "Reviewed brochure and explored pricing structures.",
+          "objections": "Requested more flexible payment terms.",
           "promises": [
-            "Send a revised pricing tier",
-            "Offer a 6\u2011month trial"
+            "Provide pricing model",
+            "Schedule demo"
           ],
-          "personal_details": "Talked about her recent marathon training"
+          "follow_ups": [
+            {
+              "promise": "Send product brochure",
+              "status": "delivered",
+              "owner": "us"
+            }
+          ],
+          "personal_details": ""
         },
         {
-          "date": "2023-09-20",
-          "topics": [
-            "Feature X request",
-            "Beta testing"
-          ],
-          "objections": [
-            "Feature X not yet released",
-            "Unclear rollout timeline"
-          ],
+          "date": "2026-05-20",
+          "topics": "Demo conducted; discussed implementation phases.",
+          "objections": "Need clarification on support SLA.",
           "promises": [
-            "Add her to beta list",
-            "Provide expected release date"
+            "Finalize contract terms"
           ],
-          "personal_details": "Shared that she adopted a rescue dog last week"
+          "follow_ups": [
+            {
+              "promise": "Provide pricing model",
+              "status": "not delivered",
+              "owner": "us"
+            },
+            {
+              "promise": "Schedule demo",
+              "status": "delivered",
+              "owner": "us"
+            }
+          ],
+          "personal_details": "Mentioned she will be on vacation the week of June 1."
         },
         {
-          "date": "2023-11-05",
-          "topics": [
-            "Implementation plan",
-            "Support resources"
+          "date": "2026-08-15",
+          "topics": "Final contract review and signing.",
+          "objections": "None.",
+          "promises": [],
+          "follow_ups": [
+            {
+              "promise": "Provide pricing model",
+              "status": "delivered",
+              "owner": "us"
+            },
+            {
+              "promise": "Finalize contract terms",
+              "status": "delivered",
+              "owner": "contact"
+            }
           ],
-          "objections": [
-            "Limited internal dev resources",
-            "Need more documentation"
-          ],
-          "promises": [
-            "Deliver a detailed implementation guide",
-            "Assign a dedicated support engineer"
-          ],
-          "personal_details": "Mentioned her upcoming vacation to the mountains"
+          "personal_details": ""
         }
       ]
     },
     {
       "contact_id": "c2",
-      "name": "John Smith",
-      "company": "Innovate LLC",
+      "name": "Marcus Thorne",
+      "title": "Chief Technology Officer",
+      "company": "GreenWave Energy",
       "meetings": [
         {
-          "date": "2023-06-15",
-          "topics": [
-            "Platform overview",
-            "Use case alignment"
-          ],
-          "objections": [
-            "Uncertainty about ROI",
-            "Integration complexity"
-          ],
+          "date": "2026-01-10",
+          "topics": "Explored renewable tech integration possibilities.",
+          "objections": "Questioned scalability of solution.",
           "promises": [
-            "Create a ROI calculator",
-            "Share integration checklist"
+            "Share case study"
           ],
-          "personal_details": "Talked about his weekend woodworking hobby"
+          "follow_ups": [],
+          "personal_details": ""
         },
         {
-          "date": "2023-07-28",
-          "topics": [
-            "Pilot program",
-            "Success metrics"
-          ],
-          "objections": [
-            "Pilot cost concerns",
-            "Timeline for results"
-          ],
+          "date": "2026-02-20",
+          "topics": "Discussed technical specifications.",
+          "objections": "Requested detailed case study for reference.",
           "promises": [
-            "Offer a discounted pilot",
-            "Define clear KPI dashboard"
+            "Provide integration roadmap"
           ],
-          "personal_details": "Mentioned his son\u2019s graduation ceremony"
+          "follow_ups": [
+            {
+              "promise": "Share case study",
+              "status": "not delivered",
+              "owner": "us"
+            }
+          ],
+          "personal_details": ""
         },
         {
-          "date": "2023-09-03",
-          "topics": [
-            "Data migration",
-            "Compliance"
-          ],
-          "objections": [
-            "Data privacy regulations",
-            "Potential downtime"
-          ],
+          "date": "2026-04-05",
+          "topics": "Reviewed integration roadmap draft.",
+          "objections": "Minor concerns about timeline.",
           "promises": [
-            "Provide GDPR compliance docs",
-            "Outline migration plan with zero downtime"
+            "Offer pilot program"
           ],
-          "personal_details": "Revealed he\u2019s training for a triathlon"
+          "follow_ups": [
+            {
+              "promise": "Provide integration roadmap",
+              "status": "delivered",
+              "owner": "us"
+            }
+          ],
+          "personal_details": ""
         },
         {
-          "date": "2023-10-22",
-          "topics": [
-            "Pricing negotiation",
-            "Long\u2011term partnership"
+          "date": "2026-06-15",
+          "topics": "Discussed pilot program details.",
+          "objections": "Needs budget approval.",
+          "promises": [],
+          "follow_ups": [
+            {
+              "promise": "Offer pilot program",
+              "status": "not delivered",
+              "owner": "us"
+            }
           ],
-          "objections": [
-            "Budget freeze for Q4",
-            "Need volume discounts"
+          "personal_details": "He mentioned his son just started college."
+        },
+        {
+          "date": "2026-08-30",
+          "topics": "Final follow\u2011up on pilot program.",
+          "objections": "Budget still pending.",
+          "promises": [],
+          "follow_ups": [
+            {
+              "promise": "Offer pilot program",
+              "status": "not delivered",
+              "owner": "us"
+            }
           ],
-          "promises": [
-            "Propose a tiered discount structure",
-            "Schedule quarterly business reviews"
-          ],
-          "personal_details": "Shared that his garden tomatoes finally ripened"
+          "personal_details": ""
         }
       ]
     },
     {
       "contact_id": "c3",
-      "name": "Maria Garcia",
-      "company": "HealthPlus",
+      "name": "Aisha Patel",
+      "title": "Head of Marketing",
+      "company": "Stellar Media",
       "meetings": [
         {
-          "date": "2023-05-10",
-          "topics": [
-            "Telehealth module",
-            "Regulatory compliance"
-          ],
-          "objections": [
-            "Patient data security",
-            "State licensing issues"
-          ],
+          "date": "2026-03-02",
+          "topics": "Introduced our media solutions and discussed campaign goals.",
+          "objections": "Concern about audience reach metrics.",
           "promises": [
-            "Supply HIPAA audit report",
-            "Map licensing requirements per state"
+            "Send recent campaign analytics"
           ],
-          "personal_details": "Mentioned her recent trip to Oaxaca"
+          "follow_ups": [],
+          "personal_details": ""
         },
         {
-          "date": "2023-06-18",
-          "topics": [
-            "Mobile app UX",
-            "Patient engagement"
-          ],
-          "objections": [
-            "Low adoption rates",
-            "App performance on older devices"
-          ],
+          "date": "2026-04-18",
+          "topics": "Reviewed analytics and proposed custom strategy.",
+          "objections": "Requested more detailed ROI projection.",
           "promises": [
-            "Share UX improvement mockups",
-            "Provide performance optimization guide"
+            "Create custom proposal"
           ],
-          "personal_details": "Talked about her teenage daughter's school play"
+          "follow_ups": [
+            {
+              "promise": "Send recent campaign analytics",
+              "status": "delivered",
+              "owner": "us"
+            }
+          ],
+          "personal_details": ""
         },
         {
-          "date": "2023-08-02",
-          "topics": [
-            "Analytics dashboard",
-            "Outcome tracking"
+          "date": "2026-07-01",
+          "topics": "Presented custom proposal and discussed execution timeline.",
+          "objections": "Need clarification on creative assets.",
+          "promises": [],
+          "follow_ups": [
+            {
+              "promise": "Create custom proposal",
+              "status": "delivered",
+              "owner": "us"
+            }
           ],
-          "objections": [
-            "Lack of customizable reports",
-            "Data latency concerns"
-          ],
-          "promises": [
-            "Demo custom report builder",
-            "Commit to real\u2011time data sync"
-          ],
-          "personal_details": "Revealed she is learning to play the guitar"
+          "personal_details": "She mentioned she just got a new puppy."
         },
         {
-          "date": "2023-09-27",
-          "topics": [
-            "Contract renewal",
-            "Pricing tiers"
-          ],
-          "objections": [
-            "Need price lock for next 2 years",
-            "Prefer usage\u2011based billing"
-          ],
-          "promises": [
-            "Offer a fixed\u2011price multi\u2011year contract",
-            "Introduce usage\u2011based pricing option"
-          ],
-          "personal_details": "Mentioned her upcoming birthday celebration with family"
-        },
-        {
-          "date": "2023-11-14",
-          "topics": [
-            "New feature rollout",
-            "Feedback loop"
-          ],
-          "objections": [
-            "Potential workflow disruptions",
-            "Training requirements"
-          ],
-          "promises": [
-            "Provide phased rollout plan",
-            "Schedule on\u2011site training sessions"
-          ],
-          "personal_details": "Shared that she volunteers at a local community clinic"
+          "date": "2026-09-10",
+          "topics": "Finalized contract terms and next steps.",
+          "objections": "None.",
+          "promises": [],
+          "follow_ups": [],
+          "personal_details": ""
         }
       ]
     },
     {
       "contact_id": "c4",
-      "name": "Ahmed Khan",
-      "company": "FinServe",
+      "name": "Luis Martinez",
+      "title": "Director of Operations",
+      "company": "Alpine Logistics",
       "meetings": [
         {
-          "date": "2023-04-22",
-          "topics": [
-            "Risk assessment tool",
-            "RegTech integration"
-          ],
-          "objections": [
-            "Model transparency",
-            "Regulatory approval timeline"
-          ],
+          "date": "2026-01-25",
+          "topics": "Discussed operational challenges and potential efficiencies.",
+          "objections": "Skeptical about immediate impact.",
           "promises": [
-            "Deliver model explainability report",
-            "Outline regulatory submission checklist"
+            "Provide operational benchmark report"
           ],
-          "personal_details": "Talked about his recent cricket tournament win"
-        },
-        {
-          "date": "2023-06-05",
-          "topics": [
-            "API performance",
-            "Scalability testing"
-          ],
-          "objections": [
-            "High transaction volume concerns",
-            "Latency spikes during peak hours"
-          ],
-          "promises": [
-            "Run load\u2011test simulation",
-            "Provide SLA guarantees"
-          ],
-          "personal_details": "Mentioned his nephew's upcoming science fair"
-        },
-        {
-          "date": "2023-08-19",
-          "topics": [
-            "Compliance dashboard",
-            "Audit trails"
-          ],
-          "objections": [
-            "Insufficient logging granularity",
-            "Data retention policies"
-          ],
-          "promises": [
-            "Enhance logging depth",
-            "Align retention policy with GDPR and local laws"
-          ],
-          "personal_details": "Shared that he is reading a novel on financial history"
-        },
-        {
-          "date": "2023-10-03",
-          "topics": [
-            "Pricing discussion",
-            "Enterprise licensing"
-          ],
-          "objections": [
-            "Budget constraints for FY24",
-            "Need flexible seat counts"
-          ],
-          "promises": [
-            "Propose a modular licensing model",
-            "Offer a discounted early\u2011adoption credit"
-          ],
-          "personal_details": "Revealed he enjoys cooking traditional biryani on weekends"
-        },
-        {
-          "date": "2023-12-01",
-          "topics": [
-            "Roadmap alignment",
-            "Future AI features"
-          ],
-          "objections": [
-            "Uncertainty about AI ethics compliance",
-            "Integration with legacy systems"
-          ],
-          "promises": [
-            "Provide AI ethics framework",
-            "Create migration path for legacy integration"
-          ],
-          "personal_details": "Mentioned his plans to attend a fintech conference in Dubai"
-        }
-      ]
-    },
-    {
-      "contact_id": "c5",
-      "name": "Li Wei",
-      "company": "GreenEnergy",
-      "meetings": [
-        {
-          "date": "2023-03-12",
-          "topics": [
-            "Solar analytics platform",
-            "Data visualization"
-          ],
-          "objections": [
-            "Accuracy of weather forecasts",
-            "Real\u2011time data ingestion"
-          ],
-          "promises": [
-            "Share forecast accuracy study",
-            "Demonstrate streaming data pipeline"
-          ],
-          "personal_details": "Talked about his recent hike in the Himalayas"
-        },
-        {
-          "date": "2023-05-08",
-          "topics": [
-            "Cost\u2011benefit analysis",
-            "ROI projection"
-          ],
-          "objections": [
-            "High upfront capex",
-            "Unclear payback period"
-          ],
-          "promises": [
-            "Provide detailed cost model",
-            "Include case studies with similar scale"
-          ],
-          "personal_details": "Mentioned his daughter's piano recital next week"
-        },
-        {
-          "date": "2023-07-21",
-          "topics": [
-            "Regulatory incentives",
-            "Tax credits"
-          ],
-          "objections": [
-            "Complex application process",
-            "Eligibility doubts"
-          ],
-          "promises": [
-            "Deliver a step\u2011by\u2011step incentive guide",
-            "Assist with pre\u2011qualification questionnaire"
-          ],
-          "personal_details": "Shared that he is learning Mandarin calligraphy"
-        },
-        {
-          "date": "2023-09-14",
-          "topics": [
-            "Pilot deployment",
-            "System integration"
-          ],
-          "objections": [
-            "Compatibility with existing SCADA",
-            "Training for ops staff"
-          ],
-          "promises": [
-            "Provide integration SDK",
-            "Schedule onsite training workshops"
-          ],
-          "personal_details": "Mentioned his upcoming family reunion in Chengdu"
+          "follow_ups": [],
+          "personal_details": ""
         }
       ]
     }

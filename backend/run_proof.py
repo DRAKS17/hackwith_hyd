@@ -8,10 +8,10 @@ client = TestClient(app)
 contact_id = "c3"  # Maria Garcia
 
 def run_proof():
-    with open("../docs/sample_briefings.md", "a", encoding="utf-8") as f:
+    with open("../docs/sample_briefings.md", "w", encoding="utf-8") as f:
         f.write("# Sample Briefings (Learning Curve Proof)\n\n")
         
-        for meeting_number in [5]:
+        for meeting_number in [1, 3, 5]:
             print(f"Simulating before meeting {meeting_number}...")
             
             # Simulate timeline

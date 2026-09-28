@@ -1,85 +1,67 @@
 import os
 import json
 from groq import Groq
-from dotenv import load_dotenv
 
-load_dotenv()
-
-# We will use prompt engineering to enforce JSON structure.
-# Model specified by user: openai/gpt-oss-120b
-MODEL_NAME = "openai/gpt-oss-120b"
-
-PROMPT = """
-You are a synthetic data generator. 
-Generate realistic synthetic data for 5 contacts. 
-For each contact, generate 4-5 past meetings. 
-Each meeting record MUST include:
-- date (YYYY-MM-DD)
-- topics discussed (list of strings)
-- objections/concerns raised (list of strings)
-- promises made (list of strings)
-- personal details mentioned (string)
-
-Return ONLY valid JSON. The output should follow this format:
-{
-  "contacts": [
-    {
-      "contact_id": "c1",
-      "name": "Jane Doe",
-      "company": "Tech Corp",
-      "meetings": [
-        {
-          "date": "2023-10-15",
-          "topics": ["Product demo", "Pricing"],
-          "objections": ["Price is too high", "Missing feature X"],
-          "promises": ["Send custom proposal", "Check with engineering about feature X"],
-          "personal_details": "Mentioned her daughter is starting college next month"
-        }
-      ]
-    }
-  ]
-}
-"""
-
-def generate_data():
+def generate_meetings():
     api_key = os.environ.get("GROQ_API_KEY")
     if not api_key:
-        print("Warning: GROQ_API_KEY is not set in the environment. Please set it in a .env file.")
+        print("GROQ_API_KEY not found. Please set it.")
         return
-
+        
     client = Groq(api_key=api_key)
     
-    print(f"Generating synthetic data using {MODEL_NAME} on Groq...")
+    prompt = """
+    Generate a JSON object containing synthetic meeting history for 5 diverse, realistic B2B contacts.
+    DO NOT use placeholder names like 'Jane Doe' or 'John Smith'. Use realistic names (e.g., 'Elena Rostova', 'Marcus Thorne').
+    Include a mix of industries for the companies.
     
-    try:
-        response = client.chat.completions.create(
-            model=MODEL_NAME,
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant designed to output valid JSON."},
-                {"role": "user", "content": PROMPT}
-            ],
-            response_format={"type": "json_object"}
-        )
+    For each contact, generate an array of 4 to 5 meetings.
+    ALL meeting dates MUST be in the year 2026, strictly between January 2026 and September 2026.
+    The meetings must be chronological.
+    
+    SCHEMA for each meeting:
+    {
+      "date": "YYYY-MM-DD",
+      "topics": "summary of what was discussed",
+      "objections": "any concerns raised",
+      "promises": ["list of promises made by either party"],
+      "follow_ups": [
+         {
+           "promise": "exact text of a promise from a PREVIOUS meeting",
+           "status": "delivered" or "not delivered",
+           "owner": "us" or "contact"
+         }
+      ],
+      "personal_details": "any personal notes (e.g. vacations, family)"
+    }
+    
+    RULES:
+    1. The first meeting has an empty "follow_ups" array.
+    2. Subsequent meetings MUST have "follow_ups" referring to promises made in earlier meetings.
+    3. Make sure SOME promises are delivered, but at least 2 contacts MUST have a promise that is NEVER delivered across all meetings.
+    4. At least 2 contacts MUST have a personal detail revealed in a LATE meeting (meeting 3, 4, or 5).
+    
+    Return ONLY a valid JSON object with a "contacts" array.
+    Each contact should have: "contact_id" (e.g. "c1", "c2"), "name", "title", "company", and "meetings".
+    """
+    
+    print("Generating synthetic data using openai/gpt-oss-120b on Groq...")
+    res = client.chat.completions.create(
+        model="openai/gpt-oss-120b",
+        messages=[
+            {"role": "system", "content": "You are a JSON data generator. Return valid JSON only."},
+            {"role": "user", "content": prompt}
+        ],
+        response_format={"type": "json_object"}
+    )
+    
+    data = json.loads(res.choices[0].message.content)
+    
+    os.makedirs(os.path.dirname(__file__), exist_ok=True)
+    with open(os.path.join(os.path.dirname(__file__), "meetings.json"), "w") as f:
+        json.dump(data, f, indent=2)
         
-        content = response.choices[0].message.content
-        
-        try:
-            data = json.loads(content)
-            # Ensure data directory exists
-            output_dir = os.path.dirname(os.path.abspath(__file__))
-            os.makedirs(output_dir, exist_ok=True)
-            
-            output_file = os.path.join(output_dir, "meetings.json")
-            with open(output_file, "w") as f:
-                json.dump(data, f, indent=2)
-                
-            print(f"Successfully generated data and saved to {output_file}")
-        except json.JSONDecodeError:
-            print("Error: The model did not return valid JSON.")
-            print("Raw output:", content)
-            
-    except Exception as e:
-        print(f"An error occurred during generation: {e}")
+    print("Successfully generated data and saved to data/meetings.json")
 
 if __name__ == "__main__":
-    generate_data()
+    generate_meetings()
