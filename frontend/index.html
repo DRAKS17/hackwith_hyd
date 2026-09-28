@@ -316,7 +316,7 @@
                 
                 if (res.ok) {
                     renderBriefing(data.briefing);
-                    document.getElementById("memory-raw").innerHTML = data.raw_memory.replace(/\\n/g, "<br>").replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>").replace(/### (.*?)<br>/g, "<h3>$1</h3>");
+                    document.getElementById("memory-raw").innerHTML = data.raw_memory.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;").replace(/\\n/g, "<br>").replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>").replace(/### (.*?)<br>/g, "<h3>$1</h3>");
                     outputCard.style.display = "block";
                 } else {
                     alert("Error: " + (data.detail || "Unknown error"));
