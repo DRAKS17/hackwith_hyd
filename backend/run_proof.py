@@ -1,40 +1,39 @@
 import json
-import time
 from fastapi.testclient import TestClient
 from api import app
 
 client = TestClient(app)
 
-contact_id = "c2"  # Maria Garcia
+out = []
+out.append('# Proof of Dynamic Memory Adaptation\n')
 
-def run_proof():
-    with open("../docs/sample_briefings.md", "w", encoding="utf-8") as f:
-        f.write("# Sample Briefings (Learning Curve Proof)\n\n")
-        
-        for meeting_number in [1, 3, 5]:
-            print(f"Simulating before meeting {meeting_number}...")
-            
-            # Simulate timeline
-            sim_res = client.post("/simulate", json={"contact_id": contact_id, "meeting_number": meeting_number})
-            assert sim_res.status_code == 200
-            
-            # Add a slight delay to ensure Hindsight indexes it
-            time.sleep(3)
-            
-            # Generate prep
-            prep_res = client.post("/prep", json={"contact_id": contact_id, "context": "Discussing next steps for deployment."})
-            assert prep_res.status_code == 200
-            
-            data = prep_res.json()
-            briefing = data.get("briefing", {})
-            model_used = data.get("model_used", "unknown")
-            
-            f.write(f"## Before meeting {meeting_number}\n")
-            f.write(f"**Model Used:** `{model_used}`\n\n")
-            f.write("```json\n")
-            f.write(json.dumps(briefing, indent=2))
-            f.write("\n```\n\n")
+# We'll test both c1 and c2, forward and backward
+contacts = ['c1', 'c2']
+stages_fwd = [1, 3, 5]
+stages_rev = [5, 3, 1]
 
-if __name__ == "__main__":
-    run_proof()
-    print("Done")
+for c in contacts:
+    out.append(f'## Contact: {c}\n')
+    out.append('### Forward Order\n')
+    for stage in stages_fwd:
+        client.post('/simulate', json={'contact_id': c, 'meeting_number': stage})
+        res = client.post('/prep', json={'contact_id': c, 'context': 'next meeting'})
+        data = res.json()
+        mod = data.get('model_used')
+        out.append(f'#### Before meeting {stage}')
+        out.append(f'**Model Used:** {mod}')
+        out.append('```json\n' + json.dumps(data.get('briefing'), indent=2) + '\n```\n')
+
+    out.append('### Reverse Order (Proving no stale state)\n')
+    for stage in stages_rev:
+        client.post('/simulate', json={'contact_id': c, 'meeting_number': stage})
+        res = client.post('/prep', json={'contact_id': c, 'context': 'next meeting'})
+        data = res.json()
+        mod = data.get('model_used')
+        out.append(f'#### Before meeting {stage}')
+        out.append(f'**Model Used:** {mod}')
+        out.append('```json\n' + json.dumps(data.get('briefing'), indent=2) + '\n```\n')
+
+with open('../docs/sample_briefings.md', 'w') as f:
+    f.write('\n'.join(out))
+print('Done generating sample_briefings.md!')

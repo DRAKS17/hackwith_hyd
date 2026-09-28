@@ -3,120 +3,30 @@
     {
       "contact_id": "c1",
       "name": "Elena Rostova",
-      "title": "Vice President of Procurement",
+      "title": "VP of Procurement",
       "company": "NovaTech Solutions",
       "meetings": [
         {
           "date": "2026-02-05",
-          "topics": "Introduced NovaTech capabilities and discussed procurement needs.",
-          "objections": "Concern about integration timeline.",
+          "topics": "Introductions and product overview",
+          "objections": "Budget constraints",
           "promises": [
-            "Send product brochure"
+            "Send detailed pricing sheet"
           ],
           "follow_ups": [],
           "personal_details": ""
         },
         {
-          "date": "2026-03-12",
-          "topics": "Reviewed brochure and explored pricing structures.",
-          "objections": "Requested more flexible payment terms.",
+          "date": "2026-04-10",
+          "topics": "Discussed integration capabilities",
+          "objections": "Integration timeline",
           "promises": [
-            "Provide pricing model",
+            "Provide API documentation",
             "Schedule demo"
           ],
           "follow_ups": [
             {
-              "promise": "Send product brochure",
-              "status": "delivered",
-              "owner": "us"
-            }
-          ],
-          "personal_details": ""
-        },
-        {
-          "date": "2026-05-20",
-          "topics": "Demo conducted; discussed implementation phases.",
-          "objections": "Need clarification on support SLA.",
-          "promises": [
-            "Finalize contract terms"
-          ],
-          "follow_ups": [
-            {
-              "promise": "Provide pricing model",
-              "status": "not delivered",
-              "owner": "us"
-            },
-            {
-              "promise": "Schedule demo",
-              "status": "delivered",
-              "owner": "us"
-            }
-          ],
-          "personal_details": "Mentioned she will be on vacation the week of June 1."
-        },
-        {
-          "date": "2026-08-15",
-          "topics": "Final contract review and signing.",
-          "objections": "None.",
-          "promises": [],
-          "follow_ups": [
-            {
-              "promise": "Provide pricing model",
-              "status": "delivered",
-              "owner": "us"
-            },
-            {
-              "promise": "Finalize contract terms",
-              "status": "delivered",
-              "owner": "contact"
-            }
-          ],
-          "personal_details": ""
-        }
-      ]
-    },
-    {
-      "contact_id": "c2",
-      "name": "Marcus Thorne",
-      "title": "Chief Technology Officer",
-      "company": "GreenWave Energy",
-      "meetings": [
-        {
-          "date": "2026-01-10",
-          "topics": "Explored renewable tech integration possibilities.",
-          "objections": "Questioned scalability of solution.",
-          "promises": [
-            "Share case study"
-          ],
-          "follow_ups": [],
-          "personal_details": ""
-        },
-        {
-          "date": "2026-02-20",
-          "topics": "Discussed technical specifications.",
-          "objections": "Requested detailed case study for reference.",
-          "promises": [
-            "Provide integration roadmap"
-          ],
-          "follow_ups": [
-            {
-              "promise": "Share case study",
-              "status": "not delivered",
-              "owner": "us"
-            }
-          ],
-          "personal_details": ""
-        },
-        {
-          "date": "2026-04-05",
-          "topics": "Reviewed integration roadmap draft.",
-          "objections": "Minor concerns about timeline.",
-          "promises": [
-            "Offer pilot program"
-          ],
-          "follow_ups": [
-            {
-              "promise": "Provide integration roadmap",
+              "promise": "Send detailed pricing sheet",
               "status": "delivered",
               "owner": "us"
             }
@@ -125,60 +35,141 @@
         },
         {
           "date": "2026-06-15",
-          "topics": "Discussed pilot program details.",
-          "objections": "Needs budget approval.",
-          "promises": [],
-          "follow_ups": [
-            {
-              "promise": "Offer pilot program",
-              "status": "not delivered",
-              "owner": "us"
-            }
+          "topics": "Demo presentation",
+          "objections": "Need ROI justification",
+          "promises": [
+            "Prepare ROI case study"
           ],
-          "personal_details": "He mentioned his son just started college."
-        },
-        {
-          "date": "2026-08-30",
-          "topics": "Final follow\u2011up on pilot program.",
-          "objections": "Budget still pending.",
-          "promises": [],
           "follow_ups": [
             {
-              "promise": "Offer pilot program",
-              "status": "not delivered",
+              "promise": "Provide API documentation",
+              "status": "delivered",
+              "owner": "us"
+            },
+            {
+              "promise": "Schedule demo",
+              "status": "delivered",
               "owner": "us"
             }
           ],
           "personal_details": ""
+        },
+        {
+          "date": "2026-08-20",
+          "topics": "Final negotiation",
+          "objections": "Contract terms",
+          "promises": [
+            "Draft contract"
+          ],
+          "follow_ups": [
+            {
+              "promise": "Prepare ROI case study",
+              "status": "not delivered",
+              "owner": "us"
+            }
+          ],
+          "personal_details": "Mentioned upcoming vacation in September"
+        }
+      ]
+    },
+    {
+      "contact_id": "c2",
+      "name": "Marcus Thorne",
+      "title": "Director of Operations",
+      "company": "GreenEdge Manufacturing",
+      "meetings": [
+        {
+          "date": "2026-01-12",
+          "topics": "Initial outreach and company background",
+          "objections": "None",
+          "promises": [
+            "Send company overview brochure"
+          ],
+          "follow_ups": [],
+          "personal_details": ""
+        },
+        {
+          "date": "2026-03-18",
+          "topics": "Reviewed operational challenges",
+          "objections": "Timeline concerns",
+          "promises": [
+            "Provide case studies",
+            "Offer pilot program"
+          ],
+          "follow_ups": [
+            {
+              "promise": "Send company overview brochure",
+              "status": "delivered",
+              "owner": "us"
+            }
+          ],
+          "personal_details": ""
+        },
+        {
+          "date": "2026-05-22",
+          "topics": "Discussed pilot feasibility",
+          "objections": "Resource allocation",
+          "promises": [
+            "Schedule pilot kickoff"
+          ],
+          "follow_ups": [
+            {
+              "promise": "Provide case studies",
+              "status": "not delivered",
+              "owner": "us"
+            },
+            {
+              "promise": "Offer pilot program",
+              "status": "delivered",
+              "owner": "us"
+            }
+          ],
+          "personal_details": ""
+        },
+        {
+          "date": "2026-08-05",
+          "topics": "Final pilot planning",
+          "objections": "Budget approval",
+          "promises": [
+            "Finalize pilot schedule"
+          ],
+          "follow_ups": [
+            {
+              "promise": "Schedule pilot kickoff",
+              "status": "unknown",
+              "owner": "us"
+            }
+          ],
+          "personal_details": "Talked about his son's graduation in June"
         }
       ]
     },
     {
       "contact_id": "c3",
       "name": "Aisha Patel",
-      "title": "Head of Marketing",
-      "company": "Stellar Media",
+      "title": "Chief Marketing Officer",
+      "company": "Lumina Retail",
       "meetings": [
         {
-          "date": "2026-03-02",
-          "topics": "Introduced our media solutions and discussed campaign goals.",
-          "objections": "Concern about audience reach metrics.",
+          "date": "2026-02-20",
+          "topics": "Brand positioning discussion",
+          "objections": "Market saturation",
           "promises": [
-            "Send recent campaign analytics"
+            "Share brand guidelines"
           ],
           "follow_ups": [],
           "personal_details": ""
         },
         {
-          "date": "2026-04-18",
-          "topics": "Reviewed analytics and proposed custom strategy.",
-          "objections": "Requested more detailed ROI projection.",
+          "date": "2026-04-25",
+          "topics": "Co-marketing opportunities",
+          "objections": "Resource constraints",
           "promises": [
-            "Create custom proposal"
+            "Propose co-marketing plan"
           ],
           "follow_ups": [
             {
-              "promise": "Send recent campaign analytics",
+              "promise": "Share brand guidelines",
               "status": "delivered",
               "owner": "us"
             }
@@ -187,43 +178,183 @@
         },
         {
           "date": "2026-07-01",
-          "topics": "Presented custom proposal and discussed execution timeline.",
-          "objections": "Need clarification on creative assets.",
-          "promises": [],
+          "topics": "Campaign strategy session",
+          "objections": "ROI measurement",
+          "promises": [
+            "Provide campaign timeline"
+          ],
           "follow_ups": [
             {
-              "promise": "Create custom proposal",
+              "promise": "Propose co-marketing plan",
               "status": "delivered",
               "owner": "us"
             }
           ],
-          "personal_details": "She mentioned she just got a new puppy."
+          "personal_details": ""
+        },
+        {
+          "date": "2026-08-15",
+          "topics": "Metrics and KPIs review",
+          "objections": "Data accuracy",
+          "promises": [
+            "Send performance metrics"
+          ],
+          "follow_ups": [
+            {
+              "promise": "Provide campaign timeline",
+              "status": "delivered",
+              "owner": "us"
+            }
+          ],
+          "personal_details": ""
         },
         {
           "date": "2026-09-10",
-          "topics": "Finalized contract terms and next steps.",
-          "objections": "None.",
-          "promises": [],
-          "follow_ups": [],
+          "topics": "Final agreement",
+          "objections": "Contract language",
+          "promises": [
+            "Finalize agreement"
+          ],
+          "follow_ups": [
+            {
+              "promise": "Send performance metrics",
+              "status": "delivered",
+              "owner": "us"
+            }
+          ],
           "personal_details": ""
         }
       ]
     },
     {
       "contact_id": "c4",
-      "name": "Luis Martinez",
-      "title": "Director of Operations",
-      "company": "Alpine Logistics",
+      "name": "Luis Fernandez",
+      "title": "Head of IT",
+      "company": "AquaPure Water Systems",
       "meetings": [
         {
-          "date": "2026-01-25",
-          "topics": "Discussed operational challenges and potential efficiencies.",
-          "objections": "Skeptical about immediate impact.",
+          "date": "2026-01-30",
+          "topics": "Technical requirements gathering",
+          "objections": "Legacy system compatibility",
           "promises": [
-            "Provide operational benchmark report"
+            "Deliver technical specification sheet"
           ],
           "follow_ups": [],
           "personal_details": ""
+        },
+        {
+          "date": "2026-03-28",
+          "topics": "On-site visit planning",
+          "objections": "Scheduling conflicts",
+          "promises": [
+            "Schedule on-site visit"
+          ],
+          "follow_ups": [
+            {
+              "promise": "Deliver technical specification sheet",
+              "status": "delivered",
+              "owner": "us"
+            }
+          ],
+          "personal_details": ""
+        },
+        {
+          "date": "2026-06-12",
+          "topics": "Security assessment discussion",
+          "objections": "Compliance concerns",
+          "promises": [
+            "Provide security assessment"
+          ],
+          "follow_ups": [
+            {
+              "promise": "Schedule on-site visit",
+              "status": "delivered",
+              "owner": "us"
+            }
+          ],
+          "personal_details": ""
+        },
+        {
+          "date": "2026-09-05",
+          "topics": "Project kickoff",
+          "objections": "Budget finalization",
+          "promises": [
+            "Initiate implementation"
+          ],
+          "follow_ups": [
+            {
+              "promise": "Provide security assessment",
+              "status": "delivered",
+              "owner": "us"
+            }
+          ],
+          "personal_details": "Mentioned his marathon training"
+        }
+      ]
+    },
+    {
+      "contact_id": "c5",
+      "name": "Sofia Dimitrov",
+      "title": "Chief Financial Officer",
+      "company": "Helios Energy",
+      "meetings": [
+        {
+          "date": "2026-02-10",
+          "topics": "Financial model overview",
+          "objections": "Assumption validation",
+          "promises": [
+            "Send financial model"
+          ],
+          "follow_ups": [],
+          "personal_details": ""
+        },
+        {
+          "date": "2026-04-14",
+          "topics": "Tax incentive discussion",
+          "objections": "Regulatory updates",
+          "promises": [
+            "Provide tax incentive summary"
+          ],
+          "follow_ups": [
+            {
+              "promise": "Send financial model",
+              "status": "delivered",
+              "owner": "us"
+            }
+          ],
+          "personal_details": ""
+        },
+        {
+          "date": "2026-07-20",
+          "topics": "Site visit arrangements",
+          "objections": "Logistics planning",
+          "promises": [
+            "Arrange site visit"
+          ],
+          "follow_ups": [
+            {
+              "promise": "Provide tax incentive summary",
+              "status": "delivered",
+              "owner": "us"
+            }
+          ],
+          "personal_details": ""
+        },
+        {
+          "date": "2026-09-25",
+          "topics": "Final contract negotiation",
+          "objections": "Payment terms",
+          "promises": [
+            "Sign contract"
+          ],
+          "follow_ups": [
+            {
+              "promise": "Arrange site visit",
+              "status": "unknown",
+              "owner": "us"
+            }
+          ],
+          "personal_details": "Talked about her upcoming sailing trip"
         }
       ]
     }

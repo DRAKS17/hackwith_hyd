@@ -28,7 +28,7 @@ def generate_meetings():
       "follow_ups": [
          {
            "promise": "exact text of a promise from a PREVIOUS meeting",
-           "status": "delivered" or "not delivered",
+           "status": "delivered" or "not delivered" or "unknown" (do NOT use "pending"),
            "owner": "us" or "contact"
          }
       ],

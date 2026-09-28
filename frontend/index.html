@@ -341,7 +341,7 @@
                 h3.textContent = key;
                 
                 const p = document.createElement("p");
-                p.textContent = value;
+                if (Array.isArray(value)) { p.innerHTML = value.map(v => "&bull; " + v).join("<br>"); } else { p.textContent = value; }
                 
                 // Highlight the key lines in the briefing visually
                 if (key.toLowerCase().includes("promise") || key.toLowerCase().includes("personal")) {
