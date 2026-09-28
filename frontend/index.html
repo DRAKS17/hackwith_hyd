@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Prep Agent</title>
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --bg: #F3F4F6;
+            --surface: #FFFFFF;
+            --text: #111827;
+            --text-light: #6B7280;
+            --border: #E5E7EB;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+        
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .flex-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .flex-row .form-group {
+            flex: 1;
+        }
+
+        /* Briefing styling */
+        .briefing-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .briefing-item {
+            margin-bottom: 1rem;
+        }
+
+        .briefing-item h3 {
+            color: var(--primary);
+            margin: 0 0 0.25rem 0;
+            font-size: 1.1rem;
+        }
+
+        .briefing-item p {
+            margin: 0;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        /* Memory Transparency */
+        .memory-badge {
+            background-color: #FEF3C7;
+            color: #92400E;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .memory-raw {
+            background-color: #1F2937;
+            color: #D1D5DB;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        #loading {
+            text-align: center;
+            display: none;
+            color: var(--text-light);
+            font-weight: 600;
+            margin: 1rem 0;
+        }
+        
+        #simulate-msg {
+            text-align: center;
+            color: #059669;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Meeting Prep Agent</h1>
+        <p class="subtitle">Powered by Hindsight Memory</p>
+
+        <div class="card">
+            <div class="flex-row">
+                <div class="form-group">
+                    <label for="contact-select">Select Contact</label>
+                    <select id="contact-select">
+                        <option value="">Loading contacts...</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="meeting-number">Simulation Mode (Time Travel)</label>
+                    <select id="meeting-number">
+                        <option value="1">1st Meeting (No past memory)</option>
+                        <option value="3">3rd Meeting (2 past meetings)</option>
+                        <option value="5">5th Meeting (4 past meetings)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="button" class="btn" style="background-color: #4B5563; margin-bottom: 1rem;" id="simulate-btn" onclick="simulateTimeline()">
+                    Reset & Sync Memory Timeline
+                </button>
+                <div id="simulate-msg">Memory synced!</div>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 0;">
+                <label for="meeting-context">Upcoming Meeting Context (Optional)</label>
+                <input type="text" id="meeting-context" placeholder="e.g. Trying to close the deal on enterprise tier...">
+            </div>
+        </div>
+
+        <button type="button" class="btn" id="prep-btn" onclick="generatePrep()">
+            ✨ Prep Me For This Meeting ✨
+        </button>
+        
+        <div id="loading">Consulting Hindsight Memory & Generating Briefing...</div>
+
+        <!-- Output Area -->
+        <div class="card" id="output-card" style="display: none; margin-top: 1.5rem;">
+            <h2>Your Briefing</h2>
+            <div id="briefing-content"></div>
+
+            <div class="briefing-section">
+                <div class="memory-badge">⚡ Powered by Hindsight</div>
+                <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 0; margin-bottom: 0.5rem;">Raw memory retrieved from the agent's vectorized graph:</p>
+                <div class="memory-raw" id="memory-raw"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = "http://127.0.0.1:8000";
+
+        // Load contacts on page load
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const res = await fetch(`${API_BASE}/contacts`);
+                const contacts = await res.json();
+                
+                const select = document.getElementById("contact-select");
+                select.innerHTML = "";
+                
+                contacts.forEach(c => {
+                    const option = document.createElement("option");
+                    option.value = c.contact_id;
+                    option.textContent = c.name;
+                    select.appendChild(option);
+                });
+            } catch (e) {
+                document.getElementById("contact-select").innerHTML = `<option value="">Make sure backend is running on :8000</option>`;
+            }
+        });
+
+        async function simulateTimeline() {
+            const contactId = document.getElementById("contact-select").value;
+            const meetingNum = document.getElementById("meeting-number").value;
+            const btn = document.getElementById("simulate-btn");
+            const msg = document.getElementById("simulate-msg");
+            
+            if (!contactId) return alert("Select a contact first");
+
+            btn.disabled = true;
+            btn.textContent = "Syncing...";
+            msg.style.display = "none";
+            document.getElementById("output-card").style.display = "none";
+
+            try {
+                const res = await fetch(`${API_BASE}/simulate`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contact_id: contactId,
+                        meeting_number: parseInt(meetingNum)
+                    })
+                });
+                
+                if (res.ok) {
+                    msg.style.display = "block";
+                    setTimeout(() => msg.style.display = "none", 3000);
+                } else {
+                    alert("Simulation failed.");
+                }
+            } catch (e) {
+                alert("Error connecting to backend.");
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "Reset & Sync Memory Timeline";
+            }
+        }
+
+        async function generatePrep() {
+            const contactId = document.getElementById("contact-select").value;
+            const context = document.getElementById("meeting-context").value;
+            
+            if (!contactId) return alert("Select a contact first");
+
+            const btn = document.getElementById("prep-btn");
+            const loading = document.getElementById("loading");
+            const outputCard = document.getElementById("output-card");
+            
+            btn.disabled = true;
+            loading.style.display = "block";
+            outputCard.style.display = "none";
+
+            try {
+                const res = await fetch(`${API_BASE}/prep`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contact_id: contactId,
+                        context: context
+                    })
+                });
+                
+                const data = await res.json();
+                
+                if (res.ok) {
+                    renderBriefing(data.briefing);
+                    document.getElementById("memory-raw").textContent = data.raw_memory;
+                    outputCard.style.display = "block";
+                } else {
+                    alert("Error: " + (data.detail || "Unknown error"));
+                }
+            } catch (e) {
+                alert("Error connecting to backend.");
+            } finally {
+                btn.disabled = false;
+                loading.style.display = "none";
+            }
+        }
+
+        function renderBriefing(briefingObj) {
+            const container = document.getElementById("briefing-content");
+            container.innerHTML = "";
+            
+            for (const [key, value] of Object.entries(briefingObj)) {
+                const div = document.createElement("div");
+                div.className = "briefing-item";
+                
+                const h3 = document.createElement("h3");
+                h3.textContent = key;
+                
+                const p = document.createElement("p");
+                p.textContent = value;
+                
+                div.appendChild(h3);
+                div.appendChild(p);
+                container.appendChild(div);
+            }
+        }
+    </script>
+</body>
+</html>

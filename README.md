@@ -41,15 +41,32 @@ An AI agent that uses [Hindsight](https://hindsight.vectorize.io/) to remember p
    python backend/ingest.py --reset
    ```
 
-5. **Run the API Server**
-   Start the FastAPI server to expose the HTTP endpoints:
+5. **Start the API Server**
+   Start the FastAPI server to expose the HTTP endpoints to the frontend:
    ```bash
    cd backend
    uvicorn api:app --reload
    ```
-   You can trigger the ingestion pipeline via the API by sending a POST request to `/ingest`.
 
-## Hindsight Integration
+6. **Open the Frontend UI**
+   Open the `frontend/index.html` file directly in your browser, or serve it via a simple HTTP server:
+   ```bash
+   cd frontend
+   python -m http.server 8080
+   ```
+   Then navigate to `http://localhost:8080`.
+
+## How Hindsight Memory Powers This
+
+Unlike traditional RAG (Retrieval-Augmented Generation) which simply retrieves chunks of text, this agent uses Vectorize's **Hindsight** memory engine to structurally "remember" past interactions. 
+
+1. **Retain**: Past meeting notes are ingested and categorized.
+2. **Recall & Reflect**: When prepping for a new meeting, the backend queries Hindsight. Hindsight navigates its internal graph of the contact (World, Experience, and Observation networks) to synthesize raw historical snippets into a consolidated memory context.
+3. **Generate**: We pass Hindsight's synthesis into an LLM (Groq / Llama / GPT) to cleanly format the final briefing ("Promises you haven't followed up on," "Concerns to address," etc.).
+
+This allows the agent's briefing to get exponentially smarter and more contextualized as more meetings occur!
+
+## Hindsight API Connection
 
 The file `backend/hindsight_client.py` contains the connection layer to Hindsight.
 - `write_memory(contact_id, meeting_data, metadata)`: Retains meeting notes into a Hindsight memory bank specific to that contact. Now supports tagging by meeting component (topics, promises, etc.).
