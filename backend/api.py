@@ -7,7 +7,7 @@ from typing import List, Dict, Any, Optional
 from groq import Groq
 
 from ingest import ingest_data
-from hindsight_client import query_memory, clear_memory, write_memory, get_hindsight_client
+from hindsight_service import query_memory, clear_memory, write_memory, get_hindsight_client
 
 app = FastAPI(title="Meeting Prep Agent API")
 
@@ -37,6 +37,9 @@ class SimulateRequest(BaseModel):
     meeting_number: int  # 1, 3, or 5
 
 def load_meetings_data():
+    """
+    Helper function to load the mock meeting data from JSON.
+    """
     data_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data', 'meetings.json')
     if os.path.exists(data_path):
         with open(data_path, 'r') as f:
@@ -109,15 +112,18 @@ def generate_prep(req: PrepRequest):
     
     try:
         memory_result = query_memory(contact_id, query)
-        memory_text = str(memory_result)
+        memory_text = getattr(memory_result, 'text', str(memory_result))
         
-        # Try to pull exact recall nodes if the client supports it for transparency, 
-        # otherwise use the reflect text as our "raw memory" snippet
+        # Try to pull exact recall nodes if the client supports it for transparency
         try:
-            client = get_hindsight_client()
-            recall_result = client.recall(query=query, bank_id=contact_id)
-            raw_memory_display = str(recall_result)
-        except:
+            client_hs = get_hindsight_client()
+            recall_result = client_hs.recall(query=query, bank_id=contact_id)
+            if hasattr(recall_result, 'model_dump_json'):
+                # Dump safely if it's a Pydantic model
+                raw_memory_display = recall_result.model_dump_json(indent=2, include={'results'})
+            else:
+                raw_memory_display = str(recall_result)
+        except Exception:
             raw_memory_display = memory_text
         
         if not memory_text or "no memories" in memory_text.lower() or "don't know" in memory_text.lower() or memory_text.strip() == "{}":
@@ -137,16 +143,15 @@ def generate_prep(req: PrepRequest):
             raw_memory=raw_memory_display
         )
         
-    api_key = os.environ.get("GROQ_API_KEY")
-    if not api_key:
-        raise HTTPException(status_code=500, detail="GROQ_API_KEY not configured in environment.")
+    api_key = os.environ.get("GROQ_API_KEY", "dummy_key")  # Provide a fallback so it doesn't 500 immediately if env missing
         
     client = Groq(api_key=api_key)
-    model = "openai/gpt-oss-120b"
+    primary_model = "openai/gpt-oss-120b"
+    fallback_model = "qwen/qwen3-32b"
     
     prompt = f"""
     You are an expert meeting prep assistant. Based on the following memories of past interactions 
-    with contact {contact_id}, generate a structured briefing for the upcoming meeting.
+    with contact {contact_id}, generate a highly specific, structured briefing for the upcoming meeting.
     
     Memories:
     {memory_text}
@@ -154,7 +159,12 @@ def generate_prep(req: PrepRequest):
     Upcoming meeting context:
     {context}
     
-    Return ONLY a JSON object with EXACTLY the following string keys:
+    INSTRUCTIONS:
+    - If there are past topics, summarize them.
+    - If there are open promises, explicitly name them so the presenter remembers to follow up.
+    - Explicitly extract and name any personal details (e.g., hobbies, family, trips) to build rapport.
+    
+    Return ONLY a valid JSON object with EXACTLY these string keys:
     - "What you discussed last time"
     - "Promises you haven't followed up on"
     - "Concerns to address"
@@ -163,6 +173,7 @@ def generate_prep(req: PrepRequest):
     
     for attempt in range(2):
         try:
+            model = primary_model if attempt == 0 else fallback_model
             response = client.chat.completions.create(
                 model=model,
                 messages=[
@@ -185,11 +196,12 @@ def generate_prep(req: PrepRequest):
                 
             return PrepResponse(briefing=briefing, raw_memory=raw_memory_display)
             
-        except Exception:
+        except Exception as e:
             if attempt == 1:
                 try:
+                    # Final fallback: plain text with the fallback model
                     fallback_response = client.chat.completions.create(
-                        model=model,
+                        model=fallback_model,
                         messages=[
                             {"role": "system", "content": "You are a helpful meeting prep assistant."},
                             {"role": "user", "content": prompt + "\nProvide the answer in plain text with clear headings instead of JSON."}
@@ -200,4 +212,8 @@ def generate_prep(req: PrepRequest):
                         raw_memory=raw_memory_display
                     )
                 except Exception:
-                    raise HTTPException(status_code=500, detail="LLM generation failed completely.")
+                    # NEVER a 500. Return a graceful fallback.
+                    return PrepResponse(
+                        briefing={"System Notice": "The LLM service (Groq) is currently unavailable. Please review the raw memories below instead."},
+                        raw_memory=raw_memory_display
+                    )

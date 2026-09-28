@@ -184,9 +184,9 @@
                 <div class="form-group">
                     <label for="meeting-number">Simulation Mode (Time Travel)</label>
                     <select id="meeting-number">
-                        <option value="1">1st Meeting (No past memory)</option>
-                        <option value="3">3rd Meeting (2 past meetings)</option>
-                        <option value="5">5th Meeting (4 past meetings)</option>
+                        <option value="1">Before Meeting 1 (0 past meetings)</option>
+                        <option value="3">Before Meeting 3 (2 past meetings)</option>
+                        <option value="5">Before Meeting 5 (4 past meetings)</option>
                     </select>
                 </div>
             </div>
@@ -208,7 +208,11 @@
             ✨ Prep Me For This Meeting ✨
         </button>
         
-        <div id="loading">Consulting Hindsight Memory & Generating Briefing...</div>
+        <div id="loading">Recalling memories and generating briefing... ⏳</div>
+
+        <div id="connection-error" style="display: none; background: #FEF2F2; color: #991B1B; padding: 1rem; border-radius: 6px; margin-top: 1rem; text-align: center; font-weight: 600;">
+            ⚠️ Unable to connect to the backend server. Please ensure it is running on port 8000.
+        </div>
 
         <!-- Output Area -->
         <div class="card" id="output-card" style="display: none; margin-top: 1.5rem;">
@@ -276,7 +280,7 @@
                     alert("Simulation failed.");
                 }
             } catch (e) {
-                alert("Error connecting to backend.");
+                document.getElementById("connection-error").style.display = "block";
             } finally {
                 btn.disabled = false;
                 btn.textContent = "Reset & Sync Memory Timeline";
@@ -296,6 +300,7 @@
             btn.disabled = true;
             loading.style.display = "block";
             outputCard.style.display = "none";
+            document.getElementById("connection-error").style.display = "none";
 
             try {
                 const res = await fetch(`${API_BASE}/prep`, {
@@ -317,7 +322,7 @@
                     alert("Error: " + (data.detail || "Unknown error"));
                 }
             } catch (e) {
-                alert("Error connecting to backend.");
+                document.getElementById("connection-error").style.display = "block";
             } finally {
                 btn.disabled = false;
                 loading.style.display = "none";
@@ -337,6 +342,14 @@
                 
                 const p = document.createElement("p");
                 p.textContent = value;
+                
+                // Highlight the key lines in the briefing visually
+                if (key.toLowerCase().includes("promise") || key.toLowerCase().includes("personal")) {
+                    div.style.backgroundColor = "#EEF2FF";
+                    div.style.borderLeft = "4px solid var(--primary)";
+                    div.style.padding = "0.75rem";
+                    div.style.borderRadius = "0 4px 4px 0";
+                }
                 
                 div.appendChild(h3);
                 div.appendChild(p);

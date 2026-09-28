@@ -1,0 +1,81 @@
+{
+  "contacts": [
+    {
+      "contact_id": "c1",
+      "name": "Jane Doe",
+      "company": "Tech Corp",
+      "meetings": [
+        {
+          "date": "2023-10-15",
+          "topics": ["Product demo", "Pricing overview"],
+          "objections": ["Price is slightly high for Q4 budget", "Missing single sign-on (SSO)"],
+          "promises": ["Send custom proposal with discount", "Check with engineering about SSO timeline"],
+          "personal_details": "Mentioned her daughter is starting college next month."
+        },
+        {
+          "date": "2023-11-02",
+          "topics": ["SSO timeline review", "Custom proposal discussion"],
+          "objections": ["Implementation time seems too long (3 months)"],
+          "promises": ["Will talk to deployment team to see if we can expedite to 2 months"],
+          "personal_details": "Her daughter got into Stanford."
+        },
+        {
+          "date": "2023-11-20",
+          "topics": ["Expedited deployment plan", "Security review"],
+          "objections": ["Security team needs SOC2 report"],
+          "promises": ["Send SOC2 report to InfoSec by Friday"],
+          "personal_details": "Going skiing in Aspen for Thanksgiving."
+        },
+        {
+          "date": "2023-12-10",
+          "topics": ["Final contract review", "SLA terms"],
+          "objections": ["Penalty clause for downtime isn't strict enough"],
+          "promises": ["Update SLA penalty clause to match their standard vendor terms"],
+          "personal_details": "Broke her wrist while skiing."
+        },
+        {
+          "date": "2023-12-28",
+          "topics": ["Contract signature", "Kickoff planning"],
+          "objections": [],
+          "promises": ["Schedule kickoff meeting for Jan 15th"],
+          "personal_details": "Wrist is healing well, excited for the new year."
+        }
+      ]
+    },
+    {
+      "contact_id": "c2",
+      "name": "John Smith",
+      "company": "Finance Inc",
+      "meetings": [
+        {
+          "date": "2024-01-10",
+          "topics": ["Intro call", "Platform capabilities"],
+          "objections": ["Not sure if it scales for 10k users"],
+          "promises": ["Send case study on enterprise scale"],
+          "personal_details": "Loves playing golf."
+        },
+        {
+          "date": "2024-02-05",
+          "topics": ["Technical deep dive", "API integration"],
+          "objections": ["API rate limits might be too low"],
+          "promises": ["Confirm rate limit increase options with Product"],
+          "personal_details": "Planning a golf trip to Scotland."
+        },
+        {
+          "date": "2024-03-15",
+          "topics": ["Pricing negotiation"],
+          "objections": ["Annual upfront payment is tough"],
+          "promises": ["Ask finance if we can do quarterly payments"],
+          "personal_details": "Just got a new puppy."
+        },
+        {
+          "date": "2024-04-01",
+          "topics": ["Finalizing terms"],
+          "objections": [],
+          "promises": ["Send final agreement"],
+          "personal_details": "Puppy is keeping him awake at night."
+        }
+      ]
+    }
+  ]
+}

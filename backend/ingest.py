@@ -3,9 +3,12 @@ import json
 import argparse
 from typing import Dict, Any
 
-from hindsight_client import write_memory, clear_memory
+from hindsight_service import write_memory, clear_memory
 
 def load_data(filepath: str) -> Dict[str, Any]:
+    """
+    Loads JSON data from the specified filepath.
+    """
     if not os.path.exists(filepath):
         raise FileNotFoundError(f"Data file not found: {filepath}")
     with open(filepath, 'r') as f:

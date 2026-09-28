@@ -3,11 +3,15 @@ import os
 from fastapi.testclient import TestClient
 
 from api import app
-from hindsight_client import clear_memory, write_memory
+from hindsight_service import clear_memory, write_memory
 
 client = TestClient(app)
 
 def run_test():
+    """
+    Simulates the agent's memory progression by running through three states:
+    1st meeting (no memory), 3rd meeting (2 memories), and 5th meeting (4 memories).
+    """
     # Load synthetic meetings data
     data_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data', 'meetings.json')
     if not os.path.exists(data_path):

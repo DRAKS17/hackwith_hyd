@@ -1,7 +1,7 @@
-hindsight-client
-groq
-python-dotenv
-requests
-fastapi
-uvicorn
-httpx
+hindsight-client==0.10.1
+groq==1.7.0
+python-dotenv==1.0.0
+requests==2.32.5
+fastapi==0.141.1
+uvicorn==0.46.0
+httpx==0.28.1
