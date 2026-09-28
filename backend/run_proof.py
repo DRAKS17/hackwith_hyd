@@ -5,7 +5,7 @@ from api import app
 
 client = TestClient(app)
 
-contact_id = "c3"  # Maria Garcia
+contact_id = "c2"  # Maria Garcia
 
 def run_proof():
     with open("../docs/sample_briefings.md", "w", encoding="utf-8") as f:

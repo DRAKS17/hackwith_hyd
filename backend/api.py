@@ -170,7 +170,7 @@ def generate_prep(req: PrepRequest):
         
     client = Groq(api_key=api_key)
     primary_model = "openai/gpt-oss-120b"
-    fallback_model = "qwen/qwen3-32b"
+    fallback_model = "qwen/qwen3.8-27b"
     
     prompt = f"""
     You are an expert meeting prep assistant. Based on the following memories of past interactions 
