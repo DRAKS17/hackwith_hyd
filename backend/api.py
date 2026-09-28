@@ -31,6 +31,7 @@ class PrepRequest(BaseModel):
 class PrepResponse(BaseModel):
     briefing: Dict[str, Any]
     raw_memory: str
+    model_used: str
 
 class SimulateRequest(BaseModel):
     contact_id: str
@@ -82,6 +83,11 @@ def simulate_timeline(req: SimulateRequest):
                 write_memory(req.contact_id, payload, metadata)
                 ingested_count += 1
                 
+    # Vectorize Hindsight can have a slight indexing delay. Wait 3 seconds to ensure 
+    # the next /prep call retrieves the newly written memories.
+    import time
+    time.sleep(3)
+                
     return {"status": "success", "message": f"Memory reset. Ingested {meetings_to_ingest} past meetings ({ingested_count} snippets)."}
 
 @app.post("/ingest", response_model=IngestResponse)
@@ -118,11 +124,16 @@ def generate_prep(req: PrepRequest):
         try:
             client_hs = get_hindsight_client()
             recall_result = client_hs.recall(query=query, bank_id=contact_id)
-            if hasattr(recall_result, 'model_dump_json'):
-                # Dump safely if it's a Pydantic model
-                raw_memory_display = recall_result.model_dump_json(indent=2, include={'results'})
+            if hasattr(recall_result, 'results') and recall_result.results:
+                count = len(recall_result.results)
+                lines = [f"### Hindsight recalled {count} memories:"]
+                for i, r in enumerate(recall_result.results, 1):
+                    date_val = r.metadata.get('date', 'Unknown date') if getattr(r, 'metadata', None) else 'Unknown date'
+                    type_val = r.metadata.get('type', 'fact') if getattr(r, 'metadata', None) else 'fact'
+                    lines.append(f"{i}. **[{date_val} | {type_val}]** {r.text}")
+                raw_memory_display = "\n\n".join(lines)
             else:
-                raw_memory_display = str(recall_result)
+                raw_memory_display = "No specific memory nodes recalled."
         except Exception:
             raw_memory_display = memory_text
         
@@ -140,7 +151,8 @@ def generate_prep(req: PrepRequest):
                 "Concerns to address": "None.",
                 "Personal touch to mention": "This is your first meeting. Focus on building rapport."
             },
-            raw_memory=raw_memory_display
+            raw_memory=raw_memory_display,
+            model_used="static-no-memory"
         )
         
     api_key = os.environ.get("GROQ_API_KEY", "dummy_key")  # Provide a fallback so it doesn't 500 immediately if env missing
@@ -194,7 +206,7 @@ def generate_prep(req: PrepRequest):
             if not all(k in briefing for k in expected_keys):
                 raise ValueError("Missing expected keys in JSON")
                 
-            return PrepResponse(briefing=briefing, raw_memory=raw_memory_display)
+            return PrepResponse(briefing=briefing, raw_memory=raw_memory_display, model_used=model)
             
         except Exception as e:
             if attempt == 1:
@@ -209,11 +221,13 @@ def generate_prep(req: PrepRequest):
                     )
                     return PrepResponse(
                         briefing={"Fallback Plain Text": fallback_response.choices[0].message.content},
-                        raw_memory=raw_memory_display
+                        raw_memory=raw_memory_display,
+                        model_used=f"{fallback_model}-plaintext"
                     )
                 except Exception:
                     # NEVER a 500. Return a graceful fallback.
                     return PrepResponse(
                         briefing={"System Notice": "The LLM service (Groq) is currently unavailable. Please review the raw memories below instead."},
-                        raw_memory=raw_memory_display
+                        raw_memory=raw_memory_display,
+                        model_used="system-fallback-error"
                     )

@@ -27,6 +27,8 @@ def write_memory(contact_id: str, meeting_data: dict, metadata: dict = None):
     Returns:
         The response from the Hindsight retain API.
     """
+    import time
+    time.sleep(0.5)
     client = get_hindsight_client()
     
     # Enrich meeting data with metadata if provided so it's queryable via content
