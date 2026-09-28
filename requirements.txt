@@ -1,3 +1,6 @@
 hindsight-client
 groq
 python-dotenv
+requests
+fastapi
+uvicorn

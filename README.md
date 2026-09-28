@@ -31,8 +31,27 @@ An AI agent that uses [Hindsight](https://hindsight.vectorize.io/) to remember p
    ```
    This uses Groq (model `openai/gpt-oss-120b`) to generate 5 realistic contacts with 4-5 past meetings each. The output will be saved to `data/meetings.json`.
 
+4. **Run Data Ingestion (CLI)**
+   To ingest the generated data into Hindsight memory, use the `ingest.py` script:
+   ```bash
+   python backend/ingest.py
+   ```
+   To clear a contact's memory before re-ingesting (useful for testing), use the `--reset` flag:
+   ```bash
+   python backend/ingest.py --reset
+   ```
+
+5. **Run the API Server**
+   Start the FastAPI server to expose the HTTP endpoints:
+   ```bash
+   cd backend
+   uvicorn api:app --reload
+   ```
+   You can trigger the ingestion pipeline via the API by sending a POST request to `/ingest`.
+
 ## Hindsight Integration
 
 The file `backend/hindsight_client.py` contains the connection layer to Hindsight.
-- `write_memory(contact_id, meeting_data)`: Retains meeting notes into a Hindsight memory bank specific to that contact.
+- `write_memory(contact_id, meeting_data, metadata)`: Retains meeting notes into a Hindsight memory bank specific to that contact. Now supports tagging by meeting component (topics, promises, etc.).
 - `query_memory(contact_id, query)`: Uses Hindsight to reflect on past interactions and retrieve insights to build personalized prep briefings.
+- `clear_memory(contact_id)`: Completely resets a contact's memory bank.
